@@ -225,7 +225,7 @@ export const AuthProvider = ({ children }) => {
 
   const register = async (userData) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/register', userData);
+      const res = await axios.post('https://learning-management-system-backend-code.vercel.app/api/auth/register', userData);
       
       const { token, role } = res.data;
       localStorage.setItem('token', token);
