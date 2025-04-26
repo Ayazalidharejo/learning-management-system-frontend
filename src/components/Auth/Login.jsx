@@ -111,40 +111,34 @@
 
 
 
-
-
-// src/pages/Login.js
 import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const Login = () => {
-  const [formData, setFormData] = useState({
-    email: '',
-    password: ''
-  });
+  const [formData, setFormData] = useState({ email: '', password: '' });
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
-  
+
   const { login } = useContext(AuthContext);
   const navigate = useNavigate();
-  
+
   const { email, password } = formData;
-  
-  const onChange = e => {
+
+  const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
-  const onSubmit = async e => {
+
+  const onSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setLoading(true);
-    
+
     try {
       const result = await login(email, password);
-      
+
       if (result.success) {
-        // Redirect based on role
         if (result.role === 'student') {
           navigate('/dashboard/student');
         } else if (result.role === 'admin') {
@@ -161,44 +155,54 @@ const Login = () => {
       setLoading(false);
     }
   };
-  
+
   return (
-    <div className="login-container">
-      <h1>Login</h1>
-      
-      {error && <div className="error-message">{error}</div>}
-      
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <label>Email</label>
-          <input
-            type="email"
-            name="email"
-            value={email}
-            onChange={onChange}
-            required
-          />
+    <div className="container d-flex align-items-center justify-content-center min-vh-100">
+      <div className="card p-4 shadow" style={{ maxWidth: '400px', width: '100%' }}>
+        <h3 className="text-center mb-4">Login</h3>
+
+        {error && <div className="alert alert-danger">{error}</div>}
+
+        <form onSubmit={onSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Email address</label>
+            <input
+              type="email"
+              className="form-control"
+              name="email"
+              value={email}
+              onChange={onChange}
+              required
+              placeholder="Enter your email"
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Password</label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              value={password}
+              onChange={onChange}
+              required
+              placeholder="Enter your password"
+            />
+          </div>
+
+          <div className="d-grid">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Logging in...' : 'Login'}
+            </button>
+          </div>
+        </form>
+
+        <div className="mt-3 text-center">
+          <Link to="/forgot-password" className="d-block mb-2">
+            Forgot Password?
+          </Link>
+          <Link to="/register">Don't have an account? Register</Link>
         </div>
-        
-        <div className="form-group">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={onChange}
-            required
-          />
-        </div>
-        
-        <button type="submit" disabled={loading}>
-          {loading ? 'Logging in...' : 'Login'}
-        </button>
-      </form>
-      
-      <div className="links">
-        <Link to="/forgot-password">Forgot Password?</Link>
-        <Link to="/register">Don't have an account? Register</Link>
       </div>
     </div>
   );

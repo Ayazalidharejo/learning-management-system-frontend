@@ -129,27 +129,28 @@
 
 
 
-// src/pages/ResetPassword.js
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const ResetPassword = () => {
   const { token } = useParams();
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     password: '',
     confirmPassword: ''
   });
+
   const [message, setMessage] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [verifying, setVerifying] = useState(true);
   const [tokenValid, setTokenValid] = useState(false);
-  
+
   const { password, confirmPassword } = formData;
-  
+
   useEffect(() => {
     const verifyToken = async () => {
       try {
@@ -161,35 +162,34 @@ const ResetPassword = () => {
         setVerifying(false);
       }
     };
-    
+
     verifyToken();
   }, [token]);
-  
+
   const onChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
-  
+
   const onSubmit = async e => {
     e.preventDefault();
     setError('');
     setMessage('');
-    
+
     if (password !== confirmPassword) {
       setError('Passwords do not match');
       return;
     }
-    
+
     setLoading(true);
-    
+
     try {
       const res = await axios.post(`http://localhost:5000/api/auth/reset-password/${token}`, {
         password,
         confirmPassword
       });
-      
+
       setMessage(res.data.message);
-      
-      // Redirect to login after successful password reset
+
       setTimeout(() => {
         navigate('/login');
       }, 3000);
@@ -199,57 +199,75 @@ const ResetPassword = () => {
       setLoading(false);
     }
   };
-  
+
   if (verifying) {
-    return <div>Verifying token...</div>;
-  }
-  
-  if (!tokenValid) {
     return (
-      <div className="reset-password-container">
-        <h1>Reset Password</h1>
-        <div className="error-message">{error}</div>
-        <Link to="/forgot-password">Request a new password reset</Link>
+      <div className="d-flex justify-content-center align-items-center vh-100">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Verifying...</span>
+        </div>
       </div>
     );
   }
-  
+
+  if (!tokenValid) {
+    return (
+      <div className="container d-flex align-items-center justify-content-center min-vh-100">
+        <div className="card p-4 shadow" style={{ maxWidth: '450px', width: '100%' }}>
+          <h3 className="text-center mb-3">Reset Password</h3>
+          <div className="alert alert-danger text-center">{error}</div>
+          <div className="text-center">
+            <Link to="/forgot-password">Request a new reset link</Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="reset-password-container">
-      <h1>Reset Password</h1>
-      
-      {error && <div className="error-message">{error}</div>}
-      {message && <div className="success-message">{message}</div>}
-      
-      <form onSubmit={onSubmit}>
-        <div className="form-group">
-          <label>New Password</label>
-          <input
-            type="password"
-            name="password"
-            value={password}
-            onChange={onChange}
-            required
-            minLength="6"
-          />
-        </div>
-        
-        <div className="form-group">
-          <label>Confirm New Password</label>
-          <input
-            type="password"
-            name="confirmPassword"
-            value={confirmPassword}
-            onChange={onChange}
-            required
-            minLength="6"
-          />
-        </div>
-        
-        <button type="submit" disabled={loading}>
-          {loading ? 'Resetting...' : 'Reset Password'}
-        </button>
-      </form>
+    <div className="container d-flex align-items-center justify-content-center min-vh-100">
+      <div className="card p-4 shadow" style={{ maxWidth: '450px', width: '100%' }}>
+        <h3 className="text-center mb-4">Reset Password</h3>
+
+        {error && <div className="alert alert-danger">{error}</div>}
+        {message && <div className="alert alert-success">{message}</div>}
+
+        <form onSubmit={onSubmit}>
+          <div className="mb-3">
+            <label className="form-label">New Password</label>
+            <input
+              type="password"
+              className="form-control"
+              name="password"
+              value={password}
+              onChange={onChange}
+              required
+              minLength="6"
+              placeholder="Enter new password"
+            />
+          </div>
+
+          <div className="mb-3">
+            <label className="form-label">Confirm New Password</label>
+            <input
+              type="password"
+              className="form-control"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={onChange}
+              required
+              minLength="6"
+              placeholder="Confirm new password"
+            />
+          </div>
+
+          <div className="d-grid">
+            <button type="submit" className="btn btn-primary" disabled={loading}>
+              {loading ? 'Resetting...' : 'Reset Password'}
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

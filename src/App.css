@@ -246,3 +246,53 @@ button:disabled {
     grid-template-columns: 1fr;
   }
 }
+.superadmin-dashboard {
+  background-color: #f1f3f5;
+  min-height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 40px;
+}
+
+.superadmin-dashboard .container {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(0, 0, 0, 0.05);
+}
+
+.superadmin-dashboard h1 {
+  color: #343a40;
+  font-weight: 700;
+}
+
+.superadmin-dashboard .card {
+  border-left: 5px solid #0d6efd;
+  transition: all 0.2s ease-in-out;
+}
+
+.superadmin-dashboard .card:hover {
+  transform: scale(1.01);
+  box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+
+.superadmin-dashboard .btn {
+  font-weight: 500;
+}
+
+.superadmin-dashboard .table th {
+  background-color: #f8f9fa;
+  font-weight: 600;
+}
+
+.superadmin-dashboard .list-group-item {
+  font-size: 0.95rem;
+}
+
+.superadmin-dashboard .alert {
+  font-size: 0.95rem;
+}
+
+.superadmin-dashboard .form-label {
+  font-weight: 500;
+  color: #495057;
+}
