@@ -187,7 +187,7 @@ export const AuthProvider = ({ children }) => {
           axios.defaults.headers.common['x-auth-token'] = token;
           
           // Get user data
-          const res = await axios.get('http://localhost:5000/api/auth/me');
+          const res = await axios.get('https://learning-management-system-backend-code-aiqn.vercel.app/api/auth/me');
           setUser(res.data);
         } catch (err) {
           console.error('Authentication error:', err);
@@ -204,7 +204,7 @@ export const AuthProvider = ({ children }) => {
 
   const login = async (email, password) => {
     try {
-      const res = await axios.post('http://localhost:5000/api/auth/login', {
+      const res = await axios.post('https://learning-management-system-backend-code-aiqn.vercel.app/api/auth/login', {
         email,
         password
       });
