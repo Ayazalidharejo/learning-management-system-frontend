@@ -2,6 +2,7 @@ import axios from 'axios';
 
 const api = axios.create({
   baseURL: 'https://learning-management-system-backend-code.vercel.app/api'
+  
 });
 
 // Add auth token to requests

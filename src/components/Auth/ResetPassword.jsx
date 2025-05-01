@@ -154,7 +154,8 @@ const ResetPassword = () => {
   useEffect(() => {
     const verifyToken = async () => {
       try {
-        const res = await axios.get(`http://localhost:5000/api/auth/verify-reset-token/${token}`);
+        const res = await axios.get(`earning-management-system-backend-code.vercel.app/api/auth/verify-reset-token/${token}`);
+        
         setTokenValid(res.data.valid);
       } catch (err) {
         setError('Invalid or expired token');
@@ -183,7 +184,7 @@ const ResetPassword = () => {
     setLoading(true);
 
     try {
-      const res = await axios.post(`https://learning-management-system-backend-code.vercel.app/reset-password/${token}`, {
+      const res = await axios.post(`https://learning-management-system-backend-code-aiqn.vercel.app/api/auth/reset-password/${token}`, {
         password,
         confirmPassword
       });
