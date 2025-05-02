@@ -81,8 +81,8 @@ const ForgotPassword = () => {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   
-  // Make sure this matches the URL in your authController.js
-  const API_BASE_URL = 'https://learning-management-system-backend-code-aiqn.vercel.app/api';
+  // This is the correct API URL that matches your backend resetURL
+  const API_URL = 'https://learning-management-system-backend-code-aiqn.vercel.app/api/auth/forgot-password';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -91,22 +91,30 @@ const ForgotPassword = () => {
     setError('');
 
     try {
-      console.log('Sending request to:', `${API_BASE_URL}/auth/forgot-password`);
+      // Log the request for debugging
+      console.log('Sending forgot password request to:', API_URL);
+      console.log('Email being sent:', email.trim());
       
-      const res = await axios.post(`${API_BASE_URL}/auth/forgot-password`, { 
+      const res = await axios.post(API_URL, { 
         email: email.trim() 
       });
       
-      setMessage(res.data.message);
+      console.log('Response received:', res.data);
+      setMessage(res.data.message || 'Password reset link sent successfully. Please check your email.');
     } catch (err) {
       console.error('Password reset request error:', err);
       
       if (err.response) {
         console.log('Error response data:', err.response.data);
+        console.log('Error response status:', err.response.status);
         setError(err.response.data.message || 'Something went wrong. Please try again.');
       } else if (err.request) {
+        // The request was made but no response was received
+        console.log('No response received:', err.request);
         setError('No response from server. Please check your internet connection.');
       } else {
+        // Something happened in setting up the request
+        console.log('Error setting up request:', err.message);
         setError('Error: ' + err.message);
       }
     } finally {
@@ -142,6 +150,9 @@ const ForgotPassword = () => {
               required
               placeholder="you@example.com"
             />
+            <small className="form-text text-muted">
+              We'll send a password reset link to this email address.
+            </small>
           </div>
 
           <div className="d-grid mb-3">
