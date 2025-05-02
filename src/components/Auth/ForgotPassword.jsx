@@ -103,7 +103,7 @@ const ForgotPassword = () => {
       setLoading(false);
     }
   };
-
+////this is not fair
   return (
     <div className="container d-flex align-items-center justify-content-center min-vh-100">
       <div className="card p-4 shadow" style={{ maxWidth: '450px', width: '100%' }}>
