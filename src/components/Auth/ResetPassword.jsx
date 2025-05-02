@@ -322,7 +322,7 @@ const ResetPassword = () => {
   
   // API base URL - make sure this matches your backend exactly
   // Use the correct backend URL
-  const API_BASE_URL = 'https://learning-management-system-backend-code-aiqn.vercel.app/api';
+  const API_BASE_URL = 'https://learning-management-system-backend-code.vercel.app/api';
 
   useEffect(() => {
     const verifyToken = async () => {
