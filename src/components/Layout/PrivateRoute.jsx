@@ -1,33 +1,4 @@
-// import React from 'react';
-// import { Navigate } from 'react-router-dom';
-// import { useAuth } from '../../context/AuthContext';
 
-// const PrivateRoute = ({ children }) => {
-//   const { isAuthenticated, loading } = useAuth();
-
-//   if (loading) {
-//     return <div>Loading...</div>;
-//   }
-
-//   if (!isAuthenticated) {
-//     return <Navigate to="/login" />;
-//   }
-
-//   return children;
-// };
-
-// export default PrivateRoute;
-
-
-
-
-
-
-
-
-
-
-// src/components/PrivateRoute.js
 import React, { useContext } from 'react';
 import { Navigate, Outlet, useLocation } from 'react-router-dom';
 import { AuthContext } from '../../context/AuthContext';
